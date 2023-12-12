@@ -1,0 +1,134 @@
+### Three different providers for Azure
+
+Azure Provider Docks :- https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs
+
+
+Login to Azure :-
+
+az login ### it will open a browser and prompt you for interactive login
+az login --use-device-code   ### Use CLI's old authentication flow based on device code. CLI will also
+                               use this if it can't launch a browser in your behalf, e.g. in remote
+                               SSH or Cloud Shel
+
+
+
+
+Public Registry : https://registry.terraform.io/
+
+Azure Provider : THsi is the one we will use to interact with Azure Cloud
+
+Azure Stack Provider : It is an on-prem extension of MS Azure and uses the same ARM API but some of the versions and resources are little bit different so it requires it own provider
+
+Azure Active Directory : Due to the complexity of the Azure AD, there is a separate Azure Provider to deal with Azure Active Directory components.
+
+What goes into a Terraform Provider :
+
+Versioned : It is versioned. 
+
+Data Source : This is the information that we can pull from the provider about the target environments.
+
+Resources : Resources that we plan to create or modify in the Azure Cloud. We can get resource information from Data Sources.
+
+Modules : Most providers have modules associated with them which will help to easily deploy common configuration for that provider. These modules can be found in public terraform registry called https://registry.terraform.io/.
+
+Authentication : Terraform providers will have some kind of authentication method to interact with that provider. In case of Azure provider, we will be using Azure Active Directory to provide authentication.
+
+Authentication :-
+Azure CLI
+Managed Service Identity
+Service Principle with client secret  (username and password)
+Service Principal with client certificate
+
+
+Environment Variables :- We can specify some values through env variables in Azure like client id and secret.
+
+NOTE: They are case sensitive
+
+ARM_CLIENT_ID   # servie principle ID
+ARM_CLIENT_SECRET  # servie principle secret
+ARM_ENVIRONMENT   # Azure environments, Public, Gov, etc
+ARM_SUBSCRIPTION_ID
+ARM_TENANT_ID
+ARM_USE_MSI
+
+
+commands :-
+
+   1  terraform --help
+    2  clear
+    3  history
+    4  ils
+    5  ls
+    6  mkdir terraform ###
+    7  ls
+    8  cd terraform
+    9  ls
+   10  mkdir 1-main-vnet  ####
+   11  cd 1-main-vnet/
+   12  az account show
+   13  terraform version
+   14  terraform --help
+   15  code main.tf
+   16  ls
+   17  cat main.tf
+   18  vi main.tf
+   19  cat main.tf
+   20  terraform init
+   21  vi main.tf
+   22  cat main.tf
+   23  terraform init
+   24  clear
+   25  terraform plan -var resource_group_name=vnet-main -out vnet.tfplan
+   26  ls
+   27  terraform apply vnet-tfplan
+   28  terraform apply vnet.tfplan
+   29  terraform plan vnet.tfplan
+   30  ls
+   31  terraform plan --help
+   32  ls
+   33  terraform plan -stat vnet.tfplan
+   34  terraform apply main.tfplan
+   35  ls
+   36  terraform apply vnet.tfplan
+   37  terraform plan
+   38  terraform plan -var resource_group_name=vnet-main
+   39  clear
+   40  terraform plan -var resource_group_name=vnet-main
+   41  ls
+   42  terraform apply vnet.tfplan
+   43  sudo su -
+   44  ls
+   45  cd terrafpr,
+   46  cd terraform
+   47  ls
+   48  cd 1-main-vnet/
+   49  ls
+   50  terraform destroy vnet.tfplan
+   51  terraform destroy terraform.tfstate
+   52  terraform destroy
+   53  terraform plan --destroy -var resource_group_name=vnet-main
+   54  terraform destroy -var resource_group_name=vnet-main
+   55  ls
+   56  del main.tf
+   57  rem main.tf
+   58  help
+   59  rm main.tf
+   60  ls
+   61  rm terraform.*
+   62  ls
+   63  rm vnet*
+   64  ls
+   65  history
+
+
+
+Commands :-
+
+terraform version ## to check the version of terraform
+terraform init ### initializes the terraform and pulls the azurerm provider
+
+
+****** Multiple Providers in Azure ********************
+
+
+
