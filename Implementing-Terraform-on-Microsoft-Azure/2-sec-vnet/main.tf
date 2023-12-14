@@ -169,7 +169,7 @@ $env:TF_VAR_sec_vnet_id="${module.vnet-sec.vnet_id}"
 
 $env:TF_VAR_sec_vnet_name="${module.vnet-sec.vnet_name}"
 $env:TF_VAR_sec_sub_id="${data.azurerm_subscription.current.subscription_id}"
-$env:TF_VAR_sec_client_id="${azuread_service_principal.vnet_peering.application_id}"
+$env:TF_VAR_sec_client_id="${azuread_service_principal.vnet_peering.client_id}"
 $env:TF_VAR_sec_principal_id="${azuread_service_principal.vnet_peering.id}"
 $env:TF_VAR_sec_client_secret="${random_password.vnet_peering.result}"
 $env:TF_VAR_sec_resource_group="${var.sec_resource_group_name}"
@@ -194,10 +194,9 @@ output "service_principal_client_id" {
   value = azuread_service_principal.vnet_peering.id
 }
 
-output "service_principal_client_secret" {
-  #value = nonsensitive(random_password.vnet_peering.result)
-  value = nonsensitive(azuread_service_principal_password.vnet-peering.value)
-}
+#output "service_principal_client_secret" {
+#  value = azuread_service_principal_password.value
+#}
 
 output "resource_group_name" {
   value = var.sec_resource_group_name

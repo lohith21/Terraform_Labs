@@ -6,9 +6,9 @@ variable "sec_client_id" {
   type = string
 }
 
-variable "sec_client_secret" {
-  type = string
-}
+#variable "sec_client_secret" {
+#  type = string
+#}
 
 variable "sec_tenant_id" {
   type = string
@@ -38,7 +38,7 @@ provider "azurerm" {
   alias                       = "security"
   subscription_id             = var.sec_sub_id
   client_id                   = var.sec_client_id
-  client_secret               = var.sec_client_secret
+ # client_secret               = var.sec_client_secret
   tenant_id                   = var.sec_tenant_id
   skip_provider_registration  = true
   skip_credentials_validation = true
@@ -49,7 +49,7 @@ provider "azurerm" {
   alias                       = "peering"
   subscription_id             = data.azurerm_subscription.current.subscription_id
   client_id                   = var.sec_client_id
-  client_secret               = var.sec_client_secret
+ # client_secret               = var.sec_client_secret
   tenant_id                   = data.azurerm_subscription.current.tenant_id
   skip_provider_registration  = true
   skip_credentials_validation = true

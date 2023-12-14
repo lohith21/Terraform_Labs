@@ -1,6 +1,7 @@
 #### Azure Virtual Network
 
 resource "azurerm_virtual_network" "vnet-to-vnet" {
+  count               = length(var.vnet_environment)
   name                = "vnet-network"
   location            = azurerm_resource_group.vnet-rg.location
   resource_group_name = azurerm_resource_group.vnet-rg.name

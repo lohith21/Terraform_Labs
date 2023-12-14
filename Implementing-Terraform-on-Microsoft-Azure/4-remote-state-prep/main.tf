@@ -6,7 +6,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.0"
+      version = "~> 3.0"
     }
   }
 }
@@ -17,6 +17,7 @@ terraform {
 
 variable "resource_group_name" {
   type = string
+  default = "remote-state-RG"
 }
 
 variable "location" {
@@ -45,7 +46,6 @@ resource "random_integer" "sa_num" {
   max = 99999
 }
 
-
 resource "azurerm_resource_group" "setup" {
   name     = var.resource_group_name
   location = var.location
@@ -63,8 +63,9 @@ resource "azurerm_storage_account" "sa" {
 resource "azurerm_storage_container" "ct" {
   name                 = "terraform-state"
   storage_account_name = azurerm_storage_account.sa.name
-
 }
+
+##### create SAS tocken to access storage account
 
 data "azurerm_storage_account_sas" "state" {
   connection_string = azurerm_storage_account.sa.primary_connection_string
@@ -95,6 +96,8 @@ data "azurerm_storage_account_sas" "state" {
     create  = true
     update  = false
     process = false
+    tag     = false
+    filter  = false
   }
 }
 

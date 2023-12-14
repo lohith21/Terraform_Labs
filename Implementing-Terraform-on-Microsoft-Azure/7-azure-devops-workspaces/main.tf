@@ -58,7 +58,7 @@ provider "azurerm" {
 data "template_file" "subnet_prefixes" {
   count = length(var.subnet_names)
 
-  template = "$${cidrsubnet(vnet_cidr,8,current_count)}"
+  template = "${cidrsubnet(vnet_cidr,8,current_count)}"
 
   vars = {
     vnet_cidr     = var.vnet_cidr_range[terraform.workspace]
@@ -91,6 +91,20 @@ module "vnet-main" {
 }
 
 #############################################################################
+# Data Source
+#############################################################################
+
+data "azurerm_virtual_network" "vnet-check" {
+  name                = module.vnet-main.vnet_name
+  resource_group_name = azurerm_resource_group.vnet_main.name
+
+depends_on = [
+  module.vnet-main
+]
+}
+
+
+#############################################################################
 # OUTPUTS
 #############################################################################
 
@@ -106,4 +120,14 @@ output "resource_group_name" {
   value = local.full_rg_name
 }
 
+output "virtual_network_id" {
+  value = data.azurerm_virtual_network.vnet-check.id
+}
 
+output "virtual_peerings" {
+  value = data.azurerm_virtual_network.vnet-check.vnet_peerings
+}
+
+output "virtual_subnets" {
+  value = data.azurerm_virtual_network.vnet-check.subnets
+}
